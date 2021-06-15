@@ -1,8 +1,8 @@
 import React from 'react';
-import ToDoList from './components/ToDoList';
+import Main from './pages/Main';
 
 function App() {
-  return (<ToDoList></ToDoList>);
+  return (<Main></Main>);
 }
 
 export default App;
