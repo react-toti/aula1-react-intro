@@ -7,14 +7,14 @@ class Main extends React.Component {
     super(props);
 
     this.state = {
-      data: [],
+      data: [],  
     }
   }
 
-  addTodo(event, val){
+  addTodo(event, val, priority){
     event.preventDefault();
 
-    const todo = { text: val };
+    const todo = { text: val, priority: priority };
 
     this.state.data.push(todo);
 
@@ -30,6 +30,7 @@ class Main extends React.Component {
 
     this.setState({data: remainder})
   }
+
 
   render() {
     return(
