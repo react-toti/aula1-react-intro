@@ -1,34 +1,81 @@
 import React from 'react';
 import Form from '../../components/Form';
-import List from '../../components/List';
+import ListAlta from '../../components/ListAlta';
+import ListMedia from '../../components/ListMedia';
+import ListBaixa from '../../components/ListBaixa';
 
 class Main extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
-      data: [],
+      data: [{"Alta": [], "Media": [], "Baixa": []}],
     }
   }
 
-  addTodo(event, val){
+  addTodo(event, val, prioridade){
     event.preventDefault();
+    
+    var todo = { text: val };
+    if (prioridade === "") {
+      prioridade = "Alta";
+    }
 
-    const todo = { text: val };
+    if (val === "") {
+      this.addTodo.stop()
+    }
+    switch (prioridade) {
 
-    this.state.data.push(todo);
+      case "Alta" : 
+        this.state.data[0].Alta.push(todo);
+        this.setState({data: this.state.data});
+        break;
 
-    this.setState({data: this.state.data});
+      case "Media" : 
+        this.state.data[0].Media.push(todo);
+        this.setState({data: this.state.data});
+        break;
+
+      case "Baixa" : 
+        this.state.data[0].Baixa.push(todo);
+        this.setState({data: this.state.data});
+        break;
+
+      default: break;
+    }
+    
   };
 
-  removeTodo(event,value){
+  removeTodoAlta(event,value){
     event.preventDefault();
-
-    const remainder = this.state.data.filter((todo) => {
-      if(todo.text !== value) return todo;
+    var array = this.state.data;
+    const remainder = this.state.data[0].Alta.filter((todo) => {
+      return todo.text !== value;
     });
 
-    this.setState({data: remainder})
+    array[0].Alta = remainder;
+    this.setState({data: array})
+  }
+  removeTodoMedia(event,value){
+    event.preventDefault();
+    var array = this.state.data;
+
+    const remainder = this.state.data[0].Media.filter((todo) => {
+      return todo.text !== value;
+    });
+
+    array[0].Media = remainder;
+    this.setState({data: array})
+  }
+  removeTodoBaixa(event,value){
+    event.preventDefault();
+    var array = this.state.data;
+    const remainder = this.state.data[0].Baixa.filter((todo) => {
+      return todo.text !== value;
+    });
+
+    array[0].Baixa = remainder;
+    this.setState({data: array})
   }
 
   render() {
@@ -36,7 +83,9 @@ class Main extends React.Component {
       <>
         <h1>Main</h1>
         <Form addTodo={this.addTodo.bind(this)}></Form>
-        <List todos={this.state.data} remove={this.removeTodo.bind(this)}></List>
+        <ListAlta todos={this.state.data[0].Alta} remove={this.removeTodoAlta.bind(this)}></ListAlta>
+        <ListMedia todos={this.state.data[0].Media} remove={this.removeTodoMedia.bind(this)}></ListMedia>
+        <ListBaixa todos={this.state.data[0].Baixa} remove={this.removeTodoBaixa.bind(this)}></ListBaixa>
       </>
     )
   }
