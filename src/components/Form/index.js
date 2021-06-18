@@ -8,7 +8,6 @@ class Form extends React.Component{
       priority: 'alta',
     }
     this.onInputChange = this.onInputChange.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   onInputChange(event){
@@ -28,10 +27,10 @@ class Form extends React.Component{
         onChange={this.onInputChange}
         placeholder="Adicione uma tarefa"
       />
-        <select value={this.state.priority} onChange={this.handleChange}>
-          <option priority="alta">Alta</option>
-          <option priority="media">Media</option>
-          <option priority="baixa">Baixa</option>
+        <select onChange={this.handleChange.bind(this)}>
+          <option value="alta">Alta</option>
+          <option value="media">Media</option>
+          <option value="baixa">Baixa</option>
         </select>
         <button type="submit">+</button><br></br>
       </form>
